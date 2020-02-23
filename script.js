@@ -1,11 +1,17 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-
+var lowArray = [...Array(26)].map((val, i) => String.fromCharCode(i + 97));
+var uppArray = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
+var numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+var specArray = []
+console.log(lowArray)
+console.log(uppArray)
+console.log(numArray)
 // Write password to the #password input
 function writePassword() {
   // var password = generatePassword();
   var passwordText = document.querySelector("#password");
-  var length = prompt("how long do you want your password? (between 1 & 128 characters)");
+  var length = prompt("how long do you want your password? (between 8 & 128 characters)");
     if(length < 8){
       alert("password too short");
     }else if(length > 128){
