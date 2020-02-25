@@ -1,38 +1,29 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
+
 // arrays for characters used for the password
 var lowArray = [...Array(26)].map((val, i) => String.fromCharCode(i + 97));
 var uppArray = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
 var numArray = [...Array(10)].map((val, i) => String.fromCharCode(i + 48));
 var specArray = ["!","@","#","$","%","^","&","*","(",")","_","-","+","=","~","`","{","}","[","]","|","\\",":",";","\"","'","<",">","?","\/"]
 
-
 // functions for getting random characters from the arrays
-function randomLow() {
+var lower = function randomLow() {
   return lowArray[Math.floor(Math.random() * lowArray.length)];
 }
-function randomUpp() {
+var upper = function randomUpp(upper) {
   return uppArray[Math.floor(Math.random() * uppArray.length)];
 }
-function randomNum() {
-  return numArray[Math.floor(Math.random() * numArray.length)];
+var number = function randomNum(number) {
+  return numArray[Math.floor(Math.random()* numArray.length)];
 }
-function randomSpec() {
+var special = function randomSpec(special) {
   return specArray[Math.floor(Math.random() * specArray.length)];
 }
-
-// object with functions for the random characters
-var randoms = {
-  lower: randomLow,
-  upper: randomUpp,
-  number: randomNum,
-  special: randomSpec
-};
 
 // Write password to the #password input
 function writePassword() {
 
-  // var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   // prompt for length of password, stops if <8 or >128
@@ -44,9 +35,10 @@ function writePassword() {
       alert("Password too long.");
     }
   
+  //while loop to get all the confirms while password length is a valid value 
   while (pwlength > 8 && pwlength < 128) {
 
-      // confirms for which characters to use
+      // confirms for which character types to use
       var lowCase = confirm("Do you want to include lower case letters?");
         if(lowCase === true){
           alert("Lowercase letters will be included.");
@@ -67,47 +59,48 @@ function writePassword() {
           alert("Special characters will be included.");
         }
        
-  break;
-  }
-console.log(uppCase, lowCase, numCase, specCase);
-
-    // generate password function
-    function generatePassword() {
-      let generatedPassword = '';
-
-      // should add arrays to new array that have been confirmed earlier
-      let totalArray = [];
-        if(lowCase === true){totalArray.push(randomLow);
+      // creating an empty array and adding functions that create a random character from a specified array if the related confirm comes back true
+  var totalArray = [];
+        if(lowCase == true){totalArray.push(lower);
         }
         else {"";}
-        if(uppCase === true){totalArray.push(randomUpp);
+        if(uppCase == true){totalArray.push(upper);
         }
         else {"";}
-        if(numCase === true){totalArray.push(randomNum);
+        if(numCase == true){totalArray.push(number);
         }
         else {"";}
-        if(specCase === true){totalArray.push(randomSpec);
+        if(specCase == true){totalArray.push(special);
         }
         else {"";}
 
-        // if array returns no characters return nothing
+        // if array contains no functions, return nothing
     if(totalArray === 0){
       return "";
-    }
+    } 
 
-    // for loop picking a random index in total array which runs the function of the index and produces a random character, repeating until reaching password length
-    for(let i = 0; i < pwlength; i++) {
-      var randomIndex = i.Math.floor(Math.random() * (totalArray.length)-1);
-      return totalArray[randomIndex];
+    // breaks the while loop 
+    break;
+  }
+
+    // generate password function
+      function generatePassword() {
+      let generatedPassword = '';
+      
+      // for loop picking a random index in total array which runs the function of the index and produces a random character which is added to the generatedPassword var, repeating until reaching password length
+      for(let i = 0; i < pwlength; i++) {
+        var randomIndex = totalArray[Math.floor(Math.random() * totalArray.length)];
+        generatedPassword += randomIndex();
+      }
+      
+      // returns the generated pasword
+      return generatedPassword;
     }
-    
-    
-    
+  
+    // uses the generated password as the text for the passwordText var
+  var password = generatePassword();
   passwordText.value = password;
-
 } 
-
-}
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
