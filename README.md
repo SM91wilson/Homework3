@@ -1,4 +1,4 @@
-# Homework3
+# Random Password Generator
 For this project I had to write a javascript file that generated a random password using the types of characters the user picks and within a specified length.
 
 The script begins with adding a var assigned to the button with the id of generate in the HTML. 
